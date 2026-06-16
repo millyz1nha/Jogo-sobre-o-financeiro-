@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>💰 Copa Dos Números – O Jogo das Finanças</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- ===== TELA INICIAL ===== -->
+  <div id="tela-inicio" class="tela ativa">
+    <div class="estrelas"></div>
+    <!-- Brasão CBF - lado esquerdo -->
+    <img src="brasao.png" alt="Brasão CBF" class="img-brasao" />
+    <!-- Bandeira do Brasil - lado direito -->
+    <img src="bandeira.webp" alt="Bandeira do Brasil" class="img-bandeira" />
+    <div class="inicio-content">
+      <div class="troféu-emoji">🏆</div>
+      <h1 class="titulo-jogo">   Copa Dos Números  </h1>
+      <p class="subtitulo">O Jogo das Finanças Inteligentes</p>
+      <div class="bola-dinheiro">⚽💸</div>
+
+      <div class="card-regras">
+        <h2>📋 Como Jogar</h2>
+        <ul>
+          <li>🎯 <strong>Objetivo:</strong> Acumule mais pontos respondendo desafios financeiros</li>
+          <li>❓ Responda <strong>10 perguntas</strong> de 4 categorias diferentes</li>
+          <li>⏱️ Você tem <strong>20 segundos</strong> por pergunta</li>
+          <li>⭐ Resposta certa = <strong>+10 pontos</strong></li>
+          <li>⚡ Resposta rápida (menos de 10s) = <strong>bônus de +5 pontos</strong></li>
+          <li>❌ Errou ou perdeu o tempo = <strong>0 pontos</strong></li>
+          <li>🏅 Quem chegar a <strong>80+ pontos</strong> é CAMPEÃO!</li>
+        </ul>
+      </div>
+
+      <div class="categorias-preview">
+        <div class="cat-badge cat-op">➕ Operações</div>
+        <div class="cat-badge cat-js">📈 Juros</div>
+        <div class="cat-badge cat-r3">⚖️ Regra de 3</div>
+        <div class="cat-badge cat-cc">🌱 Consumo</div>
+      </div>
+
+      <div class="input-grupo">
+        <input type="text" id="nome-jogador" placeholder="Digite seu nome, campeão! 🏅" maxlength="20"/>
+      </div>
+
+      <button class="btn-principal" onclick="iniciarJogo()">
+        ⚽ JOGAR AGORA!
+      </button>
+    </div>
+  </div>
+
+  <!-- ===== TELA DE JOGO ===== -->
+  <div id="tela-jogo" class="tela">
+    <div class="estrelas"></div>
+    <!-- Neymar feliz (acerto) -->
+    <img src="neymarfeliz.png" alt="Neymar feliz" id="neymar-feliz" class="neymar-reacao" style="display:none;" />
+    <!-- Neymar triste (erro) -->
+    <img src="neymartriste.png" alt="Neymar triste" id="neymar-triste" class="neymar-reacao" style="display:none;" />
+
+    <header class="hud">
+      <div class="hud-item">
+        <span class="hud-label">Jogador</span>
+        <span class="hud-valor" id="hud-nome">—</span>
+      </div>
+      <div class="hud-item hud-pontos">
+        <span class="hud-label">⭐ Pontos</span>
+        <span class="hud-valor" id="hud-pontos">0</span>
+      </div>
+      <div class="hud-item">
+        <span class="hud-label">📋 Questão</span>
+        <span class="hud-valor" id="hud-questao">1/10</span>
+      </div>
+    </header>
+
+    <div class="timer-barra-wrap">
+      <div class="timer-barra" id="timer-barra"></div>
+    </div>
+    <div class="timer-texto" id="timer-texto">⏱️ 20s</div>
+
+    <div class="categoria-badge" id="categoria-badge">categoria</div>
+
+    <div class="card-pergunta">
+      <div class="pergunta-icone" id="pergunta-icone">❓</div>
+      <p class="pergunta-texto" id="pergunta-texto">Carregando...</p>
+      <div class="dica-box" id="dica-box" style="display:none">
+        <span id="dica-texto"></span>
+      </div>
+    </div>
+
+    <div class="alternativas" id="alternativas"></div>
+
+    <div class="feedback-box" id="feedback-box" style="display:none">
+      <span id="feedback-icone"></span>
+      <span id="feedback-texto"></span>
+    </div>
+
+    <button class="btn-proxima" id="btn-proxima" style="display:none" onclick="proximaPergunta()">
+      Próxima ➡️
+    </button>
+
+
+  </div>
+
+  <!-- ===== TELA DE RESULTADO ===== -->
+  <div id="tela-resultado" class="tela">
+    <div class="resultado-content">
+      <div class="resultado-emoji" id="resultado-emoji">🏆</div>
+      <h2 class="resultado-titulo" id="resultado-titulo">PARABÉNS!</h2>
+      <p class="resultado-nome" id="resultado-nome"></p>
+      <div class="resultado-placar">
+        <div class="placar-item">
+          <span class="placar-num" id="res-pontos">0</span>
+          <span class="placar-label">⭐ Pontos</span>
+        </div>
+        <div class="placar-item">
+          <span class="placar-num" id="res-acertos">0</span>
+          <span class="placar-label">✅ Acertos</span>
+        </div>
+        <div class="placar-item">
+          <span class="placar-num" id="res-erros">0</span>
+          <span class="placar-label">❌ Erros</span>
+        </div>
+      </div>
+      <div class="medalha-box" id="medalha-box"></div>
+      <div class="botoes-resultado">
+        <button class="btn-principal" onclick="reiniciarJogo()">🔄 Jogar de Novo</button>
+        <button class="btn-secundario" onclick="verGabarito()">📖 Ver Gabarito</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== TELA DE GABARITO ===== -->
+  <div id="tela-gabarito" class="tela">
+    <div class="gabarito-content">
+      <h2>📖 Gabarito Comentado</h2>
+      <p class="gabarito-sub">Veja a explicação de cada questão!</p>
+      <div id="lista-gabarito"></div>
+      <button class="btn-principal" onclick="voltarInicio()">🏠 Voltar ao Início</button>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
