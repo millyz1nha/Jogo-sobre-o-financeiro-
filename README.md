@@ -1,0 +1,1 @@
+Jogo educativo de educação financeira desenvolvido com HTML5, CSS3 e JavaScript, com perguntas interativas, sistema de pontuação, temporizador e desafios sobre matemática financeira e consumo consciente.
